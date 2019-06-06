@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+
+  mysql-dev:
+    image: mysql:8.0.2
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: demodb
+    ports:
+      - 3306:3306
+    networks:
+      - springboot-note-app-network
+    volumes:
+      - ~/mysql-data:/var/lib/mysql
+
+  admin:
+      image: adminer
+      ports:
+        - 8080:8080
+      depends_on:
+        - mysql-dev
+      networks:
+        - springboot-note-app-network
+
+  springboot-note-app:
+    build: .
+    ports:
+      - 80:80
+    networks:
+      - springboot-note-app-network
+    depends_on:
+      - mysql-dev
+
+networks:
+  springboot-note-app-network:
