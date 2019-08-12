@@ -14,7 +14,7 @@ services:
     volumes:
       - ~/mysql-data:/var/lib/mysql
 
-  admin:
+  adminer:
       image: adminer
       ports:
         - 8080:8080
